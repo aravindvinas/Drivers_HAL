@@ -2,7 +2,7 @@
 
 uint32_t load_val_read(hx711_Typedef *hx711)
 {
-    uint32_t load_val = 0;
+    int load_val = 0;
 
     //Wait until ready state
     while(HAL_GPIO_ReadPin(hx711->dout, hx711->dout_pin) == 1);
