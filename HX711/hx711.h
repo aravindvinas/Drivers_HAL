@@ -33,11 +33,9 @@ typedef struct
 } hx711_typedef;
 
 hx711_typedef hx711_init(GPIO_TypeDef *port_dout, GPIO_TypeDef *port_sck, uint16_t dout, uint16_t sck, uint8_t channel_gain);
-int get_weight(hx711_typedef *hx);
+float get_weight(hx711_typedef *hx);
 void tare_calc(hx711_typedef *hx);
-void calibrate(hx711_typedef *hx, uint32_t raw, uint32_t actual_mass);
+void calibrate(hx711_typedef *hx, uint32_t actual_mass);
 
 
 #endif
-
-
