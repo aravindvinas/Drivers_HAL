@@ -10,25 +10,33 @@
  * 
  */
  
-#ifndef __HX_711_H
-#define __HX_711_H
+#ifndef __HX711_H
+#define	__HX711_H
 
-#include "stm32f3xx_hal.h"
+#include "stm32f1xx_hal.h"
 
-//Channel No and Config
-#define CHANNEL_A_64     0x03
-#define CHANNEL_A_128    0x01
-#define CHANNEL_B_32     0x02
+// Channel and gain configuration
+#define CHANNEL_A_128	0x01
+#define CHANNEL_A_64	0x03
+#define CHANNEL_B_32	0x02
 
-//Parameter struct
-typedef struct{
-    GPIO_Typedef *dout;
-    GPIO_Typedef *sck;
-    uint16_t dout_pin;
-    uint16_t sck_pin;
-    uint8_t channel_gain;
-}hx711_Typedef;
+// HX711 configuration struct
+typedef struct 
+{
+	GPIO_TypeDef *dout;
+	GPIO_TypeDef *sck;
+	uint16_t pin_dout;
+	uint16_t pin_sck;
+	float offset;
+	float calibration;
+	uint8_t gain;
+} hx711_typedef;
 
-uint32_t load_val_read(hx711_Typdef *hx711);
+hx711_typedef hx711_init(GPIO_TypeDef *port_dout, GPIO_TypeDef *port_sck, uint16_t dout, uint16_t sck, uint8_t channel_gain);
+int get_weight(hx711_typedef *hx);
+void tare_calc(hx711_typedef *hx);
+float calibrate(uint32_t raw, float old_cal, uint32_t actual_mass);
+
 
 #endif
+
