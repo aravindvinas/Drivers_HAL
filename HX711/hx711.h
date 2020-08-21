@@ -25,10 +25,10 @@ typedef struct
 {
     GPIO_TypeDef *dout;
     GPIO_TypeDef *sck;
+    uint32_t offset;
+    float calibration;
     uint16_t pin_dout;
     uint16_t pin_sck;
-    float offset;
-    float calibration;
     uint8_t gain;
 } hx711_typedef;
 
