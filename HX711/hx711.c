@@ -1,10 +1,11 @@
 #include "hx711.h"
 
-static uint8_t first_flag = 0;
+static uint8_t flag = 0;
 static uin32_t data_set[16];
 
-static float mov_win_avg(uint32_t new_val)
+static float mov_win_avg(hx711_typedef hx, uint32_t new_val)
 {
+    float ret_val = 0;
     //moving window average
     for(uint8_t i=1; i<15; i++)
     {
@@ -20,7 +21,7 @@ static float mov_win_avg(uint32_t new_val)
 
     new_val = new_val/16;
     new_val = new_val - hx.offset;
-    new_val = (float)new_val/(hx.calibration);
+    ret_val = (float)new_val/(hx.calibration);
 
     return new_val;
 }
@@ -91,13 +92,13 @@ float get_weight(hx711_typedef hx)
         }
 
         probe = probe_weight(hx);
-        val = mov_win_avg(probe);
+        val = mov_win_avg(hx, probe);
     }
 
     else
     {
         probe = probe_weight(hx);
-        val = mov_win_avg(probe);
+        val = mov_win_avg(hx, probe);
     }
 
     return val;
